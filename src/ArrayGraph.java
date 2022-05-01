@@ -6,12 +6,11 @@ import java.util.Set;
  * Adjacency-matrix-based implementation of the CS240 Graph ADT. Note that this
  * implementation only allows integer valued vertices and it does not support
  * adding or removing nodes.
- * 
+ *
  * <p>See Graph.java for method specifications.
- * 
+ *
  * @author Nathan Sprague &&
  * @version ??
- *
  */
 public class ArrayGraph implements Graph<Integer> {
 
@@ -21,7 +20,7 @@ public class ArrayGraph implements Graph<Integer> {
   /**
    * Create an ArrayGraph with the specified size. Initially the graph contains no
    * edges.
-   * 
+   *
    * @param numNodes The number of nodes in this graph.
    */
   public ArrayGraph(int numNodes) {
@@ -40,7 +39,7 @@ public class ArrayGraph implements Graph<Integer> {
    * Returns true if the start and end nodes exist in this graph.
    */
   private boolean edgeValid(Integer from, Integer to) {
-    return nodeValid(from) && nodeValid(to);
+    return nodeValid(from) && nodeValid(to) && from != to;
   }
 
   /**
@@ -53,13 +52,15 @@ public class ArrayGraph implements Graph<Integer> {
 
   @Override
   public void addEdge(Integer from, Integer to) {
-    // UNFINISHED
+    if (edgeValid(from, to) && !matrix[from][to]) {
+      matrix[from][to] = true;
+      numEdges++;
+    }
   }
 
   @Override
   public boolean hasEdge(Integer from, Integer to) {
-    // UNFINISHED
-    return false;
+    return edgeValid(from, to) && matrix[from][to];
   }
 
   /**
@@ -72,7 +73,11 @@ public class ArrayGraph implements Graph<Integer> {
 
   @Override
   public void removeEdge(Integer from, Integer to) {
-    // UNFINISHED
+    if (edgeValid(from, to) && matrix[from][to]) {
+      matrix[from][to] = false;
+      numEdges--;
+    }
+
   }
 
   @Override
